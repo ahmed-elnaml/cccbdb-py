@@ -79,11 +79,11 @@ all = [
 cccbdb = "cccbdb.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/your-username/cccbdb-py"
-Documentation = "https://github.com/your-username/cccbdb-py/tree/main/docs"
-Repository = "https://github.com/your-username/cccbdb-py.git"
-Issues = "https://github.com/your-username/cccbdb-py/issues"
-Changelog = "https://github.com/your-username/cccbdb-py/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/ahmed-elnaml/cccbdb-py"
+Documentation = "https://github.com/ahmed-elnaml/cccbdb-py/tree/main/docs"
+Repository = "https://github.com/ahmed-elnaml/cccbdb-py.git"
+Issues = "https://github.com/ahmed-elnaml/cccbdb-py/issues"
+Changelog = "https://github.com/ahmed-elnaml/cccbdb-py/blob/main/CHANGELOG.md"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/cccbdb"]
