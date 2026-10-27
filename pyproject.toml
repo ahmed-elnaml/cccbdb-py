@@ -5,38 +5,61 @@ build-backend = "hatchling.build"
 [project]
 name = "cccbdb-py"
 version = "0.1.0"
-description = "An unofficial Python toolkit for accessing, parsing, validating, and analyzing molecular computational chemistry data from the NIST CCCBDB."
-readme = "README.md"
+description = "An unofficial Python toolkit for accessing, parsing, validating, and analyzing molecular computational chemistry data from the NIST CCCBDB (SRD 101)."
+readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.9"
 license = { text = "MIT" }
 authors = [
-    { name = "cccbdb-py Contributors" }
+    { name = "Ahmed & cccbdb-py Contributors" }
+]
+maintainers = [
+    { name = "Ahmed & cccbdb-py Contributors" }
 ]
 keywords = [
     "computational-chemistry",
     "quantum-chemistry",
+    "physical-chemistry",
+    "thermochemistry",
+    "spectroscopy",
+    "vibrational-frequencies",
+    "molecular-geometry",
+    "point-groups",
+    "symmetry",
+    "basis-sets",
+    "dft",
+    "coupled-cluster",
+    "ab-initio",
     "nist",
     "cccbdb",
     "cheminformatics",
-    "thermochemistry",
-    "dft",
-    "ab-initio",
-    "basis-sets",
-    "point-groups",
-    "scientific-data"
+    "materials-informatics",
+    "machine-learning",
+    "scientific-data",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
+    "Environment :: Console",
     "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
     "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
     "Operating System :: OS Independent",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Chemistry",
     "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Database :: Front-Ends",
+    "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
 dependencies = [
@@ -59,6 +82,11 @@ chemistry = [
     "ase>=3.22.0",
     "rdkit>=2023.3.1",
 ]
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.4.0",
+    "mkdocstrings[python]>=0.23.0",
+]
 dev = [
     "pytest>=7.3.0",
     "pytest-cov>=4.0.0",
@@ -67,6 +95,8 @@ dev = [
     "pandas>=1.5.0",
     "numpy>=1.23.0",
     "click>=8.1.0",
+    "build>=1.0.0",
+    "twine>=4.0.0",
 ]
 all = [
     "pandas>=1.5.0",
@@ -84,20 +114,102 @@ Documentation = "https://github.com/ahmed-elnaml/cccbdb-py/tree/main/docs"
 Repository = "https://github.com/ahmed-elnaml/cccbdb-py.git"
 Issues = "https://github.com/ahmed-elnaml/cccbdb-py/issues"
 Changelog = "https://github.com/ahmed-elnaml/cccbdb-py/blob/main/CHANGELOG.md"
+"NIST CCCBDB (Official)" = "https://cccbdb.nist.gov/"
 
+# ---------------------------------------------------------------------------
+# Hatchling Build Configuration
+# ---------------------------------------------------------------------------
 [tool.hatch.build.targets.wheel]
 packages = ["src/cccbdb"]
 
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/examples",
+    "/docs",
+    "/README.md",
+    "/LICENSE",
+    "/CHANGELOG.md",
+    "/CONTRIBUTING.md",
+    "/pyproject.toml",
+]
+
+# ---------------------------------------------------------------------------
+# Pytest & Coverage Configuration
+# ---------------------------------------------------------------------------
 [tool.pytest.ini_options]
+minversion = "7.0"
 testpaths = ["tests"]
 pythonpath = ["src"]
-addopts = "-v"
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--tb=short",
+]
+markers = [
+    "unit: fast offline unit tests using local HTML fixtures",
+    "integration: end-to-end client, cache, SQLite, and CLI tests",
+    "live: tests that make real HTTP requests to https://cccbdb.nist.gov (disabled by default)",
+]
 
+[tool.coverage.run]
+source = ["src/cccbdb"]
+branch = true
+omit = [
+    "tests/*",
+    "examples/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+precision = 2
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+]
+
+# ---------------------------------------------------------------------------
+# Ruff Linter & Formatter Configuration
+# ---------------------------------------------------------------------------
 [tool.ruff]
 line-length = 100
 target-version = "py39"
+src = ["src", "tests", "examples"]
 
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "SIM", # flake8-simplify
+]
+ignore = [
+    "E501", # line length handled by formatter
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["cccbdb"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true
+
+# ---------------------------------------------------------------------------
+# Mypy Static Type Checking Configuration
+# ---------------------------------------------------------------------------
 [tool.mypy]
 python_version = "3.9"
 strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
 ignore_missing_imports = true
+files = ["src/cccbdb"]
