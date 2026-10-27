@@ -1,0 +1,103 @@
+[build-system]
+requires = ["hatchling>=1.18.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cccbdb-py"
+version = "0.1.0"
+description = "An unofficial Python toolkit for accessing, parsing, validating, and analyzing molecular computational chemistry data from the NIST CCCBDB."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+    { name = "cccbdb-py Contributors" }
+]
+keywords = [
+    "computational-chemistry",
+    "quantum-chemistry",
+    "nist",
+    "cccbdb",
+    "cheminformatics",
+    "thermochemistry",
+    "dft",
+    "ab-initio",
+    "basis-sets",
+    "point-groups",
+    "scientific-data"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Typing :: Typed",
+]
+dependencies = [
+    "httpx>=0.24.0",
+    "beautifulsoup4>=4.11.0",
+    "lxml>=4.9.0",
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+data = [
+    "pandas>=1.5.0",
+    "numpy>=1.23.0",
+]
+cli = [
+    "typer>=0.9.0",
+    "click>=8.1.0",
+]
+chemistry = [
+    "ase>=3.22.0",
+    "rdkit>=2023.3.1",
+]
+dev = [
+    "pytest>=7.3.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+    "pandas>=1.5.0",
+    "numpy>=1.23.0",
+    "click>=8.1.0",
+]
+all = [
+    "pandas>=1.5.0",
+    "numpy>=1.23.0",
+    "click>=8.1.0",
+    "ase>=3.22.0",
+]
+
+[project.scripts]
+cccbdb = "cccbdb.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/your-username/cccbdb-py"
+Documentation = "https://github.com/your-username/cccbdb-py/tree/main/docs"
+Repository = "https://github.com/your-username/cccbdb-py.git"
+Issues = "https://github.com/your-username/cccbdb-py/issues"
+Changelog = "https://github.com/your-username/cccbdb-py/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cccbdb"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-v"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+ignore_missing_imports = true
